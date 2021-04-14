@@ -17,6 +17,9 @@ var db = mongoose.connection;
 
 var app = express();
 
+// Passport Config
+require('./config/passport')(passport);
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -35,6 +38,7 @@ app.use(
     saveUninitialized: true
   })
 );
+
 
 // Passport middleware
 app.use(passport.initialize());
