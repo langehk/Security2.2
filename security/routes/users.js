@@ -17,7 +17,11 @@ router.get('/login', function(req, res, next) {
 });
 
 router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Register' });
+  let loggedin = false; 
+  if(req.isAuthenticated()){
+    loggedin = true;
+  }
+  res.render('register', { title: 'Register', loggedin });
 });
 
 router.post('/register', function(req, res){
