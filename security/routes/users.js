@@ -12,10 +12,10 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.get('/login', function(req, res, next) {
+/* router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Login' });
 });
-
+ */
 router.get('/register', function(req, res, next) {
   let loggedin = false; 
   if(req.isAuthenticated()){
@@ -81,7 +81,7 @@ router.post('/register', function(req, res){
 })
 
 
-// Login
+/* // Login
 router.post('/login', (req, res, next) => {
   
   passport.authenticate('local', {
@@ -91,7 +91,17 @@ router.post('/login', (req, res, next) => {
   })
 
   (req, res, next);
-});
+}); */
+
+router.get('/auth/facebook',
+  passport.authenticate('facebook'));
+
+router.get('/auth/facebook/callback',
+  passport.authenticate('facebook', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 
 // Logout
