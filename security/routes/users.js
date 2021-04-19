@@ -93,7 +93,7 @@ router.post('/login', (req, res, next) => {
   (req, res, next);
 }); */
 
-router.get('/auth/facebook',
+router.get('/login',
   passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback',
