@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
     loggedin = true;
   }
   res.render('index', { title: 'Express', loggedin});
-  console.log(req.session);
+  
 });
 
 module.exports = router;
