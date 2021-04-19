@@ -2,20 +2,13 @@ var express = require('express');
 var router = express.Router();
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
-
 const passport = require('passport');
-
-
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-/* router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Login' });
-});
- */
 router.get('/register', function(req, res, next) {
   let loggedin = false; 
   if(req.isAuthenticated()){
@@ -80,37 +73,24 @@ router.post('/register', function(req, res){
   }
 })
 
-
-/* // Login
-router.post('/login', (req, res, next) => {
-  
-  passport.authenticate('local', {
-    successRedirect: '../',
-    failureRedirect: '/users/login',
-    failureFlash: true
-  })
-
-  (req, res, next);
-}); */
-
-router.get('/login',
-  passport.authenticate('facebook'));
+router.get('/login', passport.authenticate('facebook'));
 
 router.get('/auth/facebook/callback',
   passport.authenticate('facebook', { failureRedirect: '/login' }),
   function(req, res) {
     // Successful authentication, redirect home.
+    
     res.redirect('/');
   });
 
-
 // Logout
 router.get('/logout', (req, res) => {
+  req.session.destroy((err) => {
+    if(err) return next(err)
+    req.logout();
+    res.redirect('/');
+  });
   
-  req.logout();
-  req.flash('success_msg', 'You are logged out');
-  console.log(req.session);
-  res.redirect('/users/login');
 });
 
 
